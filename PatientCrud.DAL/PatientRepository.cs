@@ -14,6 +14,7 @@ namespace PatientCrud.DAL
     {
         // Store the connection string found in the Web.config to _connectionString variable.
         private readonly string _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
         public void InsertMedication(PatientDTO medication)
         {
             //Establish a connection to the SQL Server Database.
