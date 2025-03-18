@@ -1,0 +1,95 @@
+﻿/* Set padding to keep content from hitting the edges */
+.body-content {
+    margin-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+* {
+    font-family: 'Inter', sans-serif; /* Change to 'Inter' if preferred */
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.body-content {
+    flex: 1; /* Pushes the footer down */
+}
+
+footer {
+    background-color: #f8f9fa; /* Light background */
+    padding: 15px;
+    text-align: center;
+}
+
+
+/* Pagination container */
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+/* Total records text */
+.total-records {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333; /* Adjust color as needed */
+}
+
+/* Pagination links */
+.pagination-links .pagination {
+    margin: 0;
+    padding: 0;
+}
+
+/* Pagination button styling */
+.pagination a,
+.pagination span {
+    display: inline-block;
+    padding: 3px 12px;
+    margin: 2px;
+    text-decoration: none;
+    color: #007bff; /* Bootstrap primary color */
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    transition: 0.3s;
+}
+
+/* Active page */
+.pagination .active span {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+/* Disabled pagination */
+.pagination .disabled span {
+    color: #ccc;
+    pointer-events: none;
+}
+
+
+
+
+
+
