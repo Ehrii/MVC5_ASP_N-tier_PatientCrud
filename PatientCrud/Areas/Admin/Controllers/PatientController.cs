@@ -52,10 +52,8 @@ namespace PatientCrud.Areas.Admin.Controllers
                 }
                 else
                 {
-                    TempData["ErrorMessage"] = result;
-                }
-              
-                ModelState.AddModelError("", result); // Add validation message for every input fields
+                    ModelState.AddModelError("", result); // Add error message for validation
+                 }
             }
 
             return View(medication);
