@@ -20,47 +20,48 @@
       </div>
     }
   }
-<div class=" border-1 border-bottom d-flex justify-content-center flex-column align-items-center ">
-  <form id="myForm" action="@Url.Action("Create", "Patient", new { area = "Admin" })" method="post" class="w-100">
-    @Html.AntiForgeryToken() <!-- Ensures the token is included -->
-    <div class="container d-flex flex-column justify-content-center align-content-center">
-      <!-- Drug Fiel d -->
-      <div class="row mb-3 d-flex justify-content-center">
-        <label for="drug" class="col-12 col-sm-3 col-form-label text-sm-end font-monospace fs-5">Drug</label>
-        <div class="col-12 col-sm-6">
-          @Html.TextBoxFor(m => m.Drug, new { @class = "form-control" })
-          @Html.ValidationMessageFor(m => m.Drug, "", new { @class = "text-danger" })
+  <div class=" border-1 border-bottom d-flex justify-content-center flex-column align-items-center ">
+    <form id="myForm" action="@Url.Action("Create", "Patient", new { area = "Admin" })" method="post" class="w-100">
+      @Html.AntiForgeryToken() <!-- Ensures the token is included -->
+      <div class="container d-flex flex-column justify-content-center align-content-center">
+        <!-- Drug Fiel d -->
+        <div class="row mb-3 d-flex justify-content-center">
+          <label for="drug" class="col-12 col-sm-3 col-form-label text-sm-end font-monospace fs-5">Drug</label>
+          <div class="col-12 col-sm-6">
+            @Html.TextBoxFor(m => m.Drug, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Drug, "", new { @class = "text-danger" })
+          </div>
         </div>
-      </div>  
-      <!-- Dosage Field -->
-      <div class="row mb-3 d-flex justify-content-center">
-        <label for="dosage" class="col-12 col-sm-3 col-form-label text-sm-end font-monospace fs-5">Dosage</label>
-        <div class="col-12 col-sm-6">
-          @Html.TextBoxFor(m => m.Dosage, new { @class = "form-control" })
-          @Html.ValidationMessageFor(m => m.Dosage, "", new { @class = "text-danger" })
+        <!-- Dosage Field -->
+        <div class="row mb-3 d-flex justify-content-center">
+          <label for="dosage" class="col-12 col-sm-3 col-form-label text-sm-end font-monospace fs-5">Dosage</label>
+          <div class="col-12 col-sm-6">
+            @Html.TextBoxFor(m => m.Dosage, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Dosage, "", new { @class = "text-danger" })
+          </div>
+        </div>
+        <!-- Patient Field -->
+        <div class="row mb-3 d-flex justify-content-center">
+          <label for="patient" class="col-12 col-sm-3 col-form-label text-sm-end font-monospace fs-5">Patient</label>
+          <div class="col-12 col-sm-6">
+            @Html.TextBoxFor(m => m.Patient, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Patient, "", new { @class = "text-danger" })
+          </div>
+        </div>
+        <div class="row mb-3 ms-md-1 gap-2 d-flex justify-content-center text-center">
+          <div class="col-12 col-sm-auto">
+            <a class="btn btn-danger w-100 w-sm-auto" href="@(Url.Action("Index", "Patient", new { Area = "Admin" }))">Cancel</a>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <a id="clearButton" class="btn btn-primary w-100 w-sm-auto">Clear All</a>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <button type="submit" class="btn btn-success w-100 w-sm-auto">@(Model.Id > 0 ? "Update" : "Submit")</button>
+          </div>
         </div>
       </div>
-      <!-- Patient Field -->
-      <div class="row mb-3 d-flex justify-content-center">
-        <label for="patient" class="col-12 col-sm-3 col-form-label text-sm-end font-monospace fs-5">Patient</label>
-        <div class="col-12 col-sm-6">
-          @Html.TextBoxFor(m => m.Patient, new { @class = "form-control" })
-          @Html.ValidationMessageFor(m => m.Patient, "", new { @class = "text-danger" })
-        </div>
-      </div>
-      <div class="row mb-3 ms-md-1 gap-2 d-flex justify-content-center text-center">
-        <div class="col-12 col-sm-auto">
-          <a class="btn btn-danger w-100 w-sm-auto" href="@(Url.Action("Index", "Patient", new { Area = "Admin" }))">Cancel</a>
-        </div>
-        <div class="col-12 col-sm-auto">
-          <a id="clearButton" class="btn btn-primary w-100 w-sm-auto" >Clear All</a>
-        </div>
-        <div class="col-12 col-sm-auto">
-          <button type="submit" class="btn btn-success w-100 w-sm-auto">@(Model.Id > 0 ? "Update" : "Submit")</button>
-        </div>
-      </div>
-</form>
-</div>
+    </form>
+  </div>
 </main>
 
 

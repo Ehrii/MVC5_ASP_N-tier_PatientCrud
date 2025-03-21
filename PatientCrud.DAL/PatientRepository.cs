@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using PatientCrud.DTO; 
+using PatientCrud.DTO;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Data;
@@ -10,86 +10,86 @@ using System.Configuration;
 namespace PatientCrud.DAL
 {
 
-    public class PatientRepository
+  public class PatientRepository
+  {
+    // Store the connection string found in the Web.config to _connectionString variable.
+    private readonly string _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+    public void InsertMedication(PatientDTO medication)
     {
-        // Store the connection string found in the Web.config to _connectionString variable.
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+      //Establish a connection to the SQL Server Database.
+      using (SqlConnection conn = new SqlConnection(_connectionString))
+      {
+        // Define what Stored Procedure will be used for this function.
+        SqlCommand cmd = new SqlCommand("InsertMedication", conn);
+        // Assign values to its parameters.
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@Dosage", medication.Dosage);
+        cmd.Parameters.AddWithValue("@Drug", medication.Drug);
+        cmd.Parameters.AddWithValue("@Patient", medication.Patient);
 
-        public void InsertMedication(PatientDTO medication)
+        // Open the connection
+        conn.Open();
+
+        // Execute the sql query
+        cmd.ExecuteNonQuery();
+      }
+    }
+
+
+    public void UpdateMedication(PatientDTO medication)
+    {
+      using (SqlConnection conn = new SqlConnection(_connectionString))
+      {
+        SqlCommand cmd = new SqlCommand("UpdateMedication", conn);
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@Id", medication.Id);
+        cmd.Parameters.AddWithValue("@Dosage", medication.Dosage);
+        cmd.Parameters.AddWithValue("@Drug", medication.Drug);
+        cmd.Parameters.AddWithValue("@Patient", medication.Patient);
+
+        conn.Open();
+        cmd.ExecuteNonQuery();
+      }
+
+    }
+
+    public void DeleteMedication(int id)
+    {
+      using (SqlConnection conn = new SqlConnection(_connectionString))
+      {
+        SqlCommand cmd = new SqlCommand("DeleteMedication", conn);
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@Id", id);
+        conn.Open();
+        cmd.ExecuteNonQuery();
+      }
+    }
+
+    public List<PatientDTO> GetAllMedications()
+    {
+      List<PatientDTO> medications = new List<PatientDTO>();
+      using (SqlConnection conn = new SqlConnection(_connectionString))
+      {
+        SqlCommand cmd = new SqlCommand("SELECT * FROM Medication", conn);
+        conn.Open();
+        using (SqlDataReader reader = cmd.ExecuteReader())
         {
-            //Establish a connection to the SQL Server Database.
-            using (SqlConnection conn = new SqlConnection(_connectionString))
+          while (reader.Read())
+          {
+            medications.Add(new PatientDTO
             {
-               // Define what Stored Procedure will be used for this function.
-                SqlCommand cmd = new SqlCommand("InsertMedication", conn);
-                // Assign values to its parameters.
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Dosage", medication.Dosage);
-                cmd.Parameters.AddWithValue("@Drug", medication.Drug);
-                cmd.Parameters.AddWithValue("@Patient", medication.Patient);
-              
-                // Open the connection
-                conn.Open();
-
-                // Execute the sql query
-                cmd.ExecuteNonQuery();
-            }
+              Id = Convert.ToInt32(reader["Id"]),
+              Dosage = Convert.ToDecimal(reader["Dosage"]),
+              Drug = reader["Drug"].ToString(),
+              Patient = reader["Patient"].ToString(),
+              ModifiedDate = Convert.ToDateTime(reader["ModifiedDate"])
+            });
+          }
         }
-
-
-        public void UpdateMedication(PatientDTO medication)
-        { 
-            using (SqlConnection conn = new SqlConnection(_connectionString))
-            {
-                SqlCommand cmd = new SqlCommand("UpdateMedication", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id", medication.Id);
-                cmd.Parameters.AddWithValue("@Dosage", medication.Dosage);
-                cmd.Parameters.AddWithValue("@Drug", medication.Drug);
-                cmd.Parameters.AddWithValue("@Patient", medication.Patient);
-
-                conn.Open();
-                cmd.ExecuteNonQuery();
-            }
-
-        }
-
-        public void DeleteMedication(int id)
-        {
-            using (SqlConnection conn = new SqlConnection(_connectionString))
-            {
-                SqlCommand cmd = new SqlCommand("DeleteMedication", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id", id);
-                conn.Open();
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        public List<PatientDTO> GetAllMedications()
-        {
-            List<PatientDTO> medications = new List<PatientDTO>();
-            using (SqlConnection conn = new SqlConnection(_connectionString))
-            {
-                SqlCommand cmd = new SqlCommand("SELECT * FROM Medication", conn);
-                conn.Open();
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        medications.Add(new PatientDTO
-                        {
-                            Id = Convert.ToInt32(reader["Id"]),
-                            Dosage = Convert.ToDecimal(reader["Dosage"]),
-                            Drug = reader["Drug"].ToString(),
-                            Patient = reader["Patient"].ToString(),
-                            ModifiedDate = Convert.ToDateTime(reader["ModifiedDate"])
-                        });
-                    }
-                }
-            }
-            return medications;
-        }
+      }
+      return medications;
+    }
 
 
     public PatientDTO GetPatientById(int Id)
@@ -107,7 +107,7 @@ namespace PatientCrud.DAL
           // Based on the @ fill it up with the following value "Id".
           using (SqlDataReader reader = cmd.ExecuteReader())
           {
-            if (reader.Read()) 
+            if (reader.Read())
             {
               patient = new PatientDTO
               {
